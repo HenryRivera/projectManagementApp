@@ -1,0 +1,378 @@
+.login-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #E0F5FF;
+  padding: 20px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.login-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 420px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.login-header {
+  text-align: center;
+  padding: 40px 40px 30px;
+  background: #f8f9fa;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.login-logo {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.login-header h1 {
+  margin: 0 0 8px 0;
+  font-size: 24px;
+  color: #333;
+  font-weight: 600;
+}
+
+.login-header p {
+  margin: 0;
+  color: #666;
+  font-size: 14px;
+}
+
+.login-form {
+  padding: 30px 40px;
+}
+
+.login-form .form-group {
+  margin-bottom: 20px;
+}
+
+.login-form .form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+.login-form .form-group input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e5e7eb;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+
+.login-form .form-group input:focus {
+  outline: none;
+  border-color: #2e29ff;
+  box-shadow: 0 0 0 3px rgba(46, 41, 255, 0.1);
+}
+
+.login-form .form-group input::placeholder {
+  color: #9ca3af;
+}
+
+.login-error {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.sso-button {
+  width: 100%;
+  padding: 14px 24px;
+  background: #2e29ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.sso-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(46, 41, 255, 0.4);
+}
+
+.sso-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.login-divider {
+  display: flex;
+  align-items: center;
+  margin: 24px 0;
+  color: #9ca3af;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.login-divider::before,
+.login-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: #e5e7eb;
+}
+
+.login-divider span {
+  padding: 0 12px;
+}
+
+.demo-accounts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.demo-account {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+.demo-account:hover {
+  background: #f3f4f6;
+  border-color: #d1d5db;
+}
+
+.demo-name {
+  font-weight: 500;
+  color: #374151;
+  font-size: 14px;
+}
+
+.demo-role {
+  font-size: 12px;
+  color: #6b7280;
+  background: #e5e7eb;
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.login-footer {
+  text-align: center;
+  padding: 20px 40px;
+  background: #f8f9fa;
+  border-top: 1px solid #e9ecef;
+}
+
+.login-footer p {
+  margin: 0;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* SSO Simulation Overlay */
+.sso-simulation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.sso-popup {
+  background: white;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 360px;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.sso-header {
+  background: linear-gradient(135deg, #1a365d 0%, #2d3748 100%);
+  color: white;
+  padding: 24px;
+  text-align: center;
+}
+
+.sso-header .sso-logo {
+  font-size: 36px;
+  margin-bottom: 8px;
+}
+
+.sso-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.sso-content {
+  padding: 40px 24px;
+  text-align: center;
+}
+
+.sso-spinner {
+  width: 48px;
+  height: 48px;
+  border: 4px solid #e5e7eb;
+  border-top-color: #2e29ff;
+  border-radius: 50%;
+  margin: 0 auto 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.sso-content p {
+  margin: 0 0 8px 0;
+  color: #374151;
+  font-size: 14px;
+}
+
+.sso-content .sso-email {
+  color: #2e29ff;
+  font-weight: 500;
+}
+
+/* Responsive styles */
+@media (max-width: 480px) {
+  .login-container {
+    padding: 0;
+    align-items: center;
+  }
+
+  .login-card {
+    max-width: 100%;
+    border-radius: 0;
+    max-height: 100vh;
+    overflow-y: auto;
+  }
+
+  .login-header {
+    padding: 24px 24px 20px;
+  }
+
+  .login-logo {
+    font-size: 36px;
+    margin-bottom: 10px;
+  }
+
+  .login-header h1 {
+    font-size: 18px;
+  }
+
+  .login-header p {
+    font-size: 12px;
+  }
+
+  .login-form {
+    padding: 20px 24px;
+  }
+
+  .login-form .form-group input {
+    padding: 14px 16px;
+    font-size: 16px; /* Prevents iOS zoom on focus */
+  }
+
+  .sso-button {
+    padding: 16px 24px;
+  }
+
+  .login-divider {
+    margin: 20px 0;
+  }
+
+  .demo-account {
+    padding: 12px 14px;
+  }
+
+  .login-footer {
+    padding: 16px 24px;
+  }
+
+  .sso-popup {
+    max-width: 100%;
+    margin: 20px;
+    border-radius: 12px;
+  }
+
+  .sso-header {
+    padding: 20px;
+  }
+
+  .sso-content {
+    padding: 32px 20px;
+  }
+}
+
+@media (max-width: 360px) {
+  .login-header {
+    padding: 24px 16px 20px;
+  }
+
+  .login-form {
+    padding: 20px 16px;
+  }
+
+  .login-footer {
+    padding: 14px 16px;
+  }
+
+  .demo-name {
+    font-size: 13px;
+  }
+
+  .demo-role {
+    font-size: 11px;
+  }
+}
+
+/* Tablet and larger phones in landscape */
+@media (min-width: 481px) and (max-width: 768px) {
+  .login-container {
+    padding: 24px;
+  }
+
+  .login-card {
+    max-width: 400px;
+  }
+}
+
+/* Ensure proper height on mobile browsers with address bar */
+@supports (-webkit-touch-callout: none) {
+  .login-container {
+    min-height: -webkit-fill-available;
+  }
+
+  .login-card {
+    min-height: -webkit-fill-available;
+  }
+}

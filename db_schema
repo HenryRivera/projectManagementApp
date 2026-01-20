@@ -1,0 +1,32 @@
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│   users     │     │   projects  │     │    tags     │
+├─────────────┤     ├─────────────┤     ├─────────────┤
+│ id          │◄────│ owner_id    │     │ id          │
+│ name        │     │ title       │     │ name        │
+│ email       │     │ description │     └──────┬──────┘
+│ role        │     │ status      │            │
+└─────────────┘     │ health      │            │
+       │            │ progress    │            │
+       │            │ version     │            │
+       │            │ deleted_at  │            │
+       │            └──────┬──────┘            │
+       │                   │                   │
+       │                   │                   │
+       ▼                   ▼                   ▼
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│team_members │     │ milestones  │     │project_tags │
+├─────────────┤     ├─────────────┤     ├─────────────┤
+│ project_id  │     │ project_id  │     │ project_id  │
+│ user_id     │     │ title       │     │ tag_id      │
+│ role        │     │ due_date    │     └─────────────┘
+│ capacity    │     │ completed   │
+└─────────────┘     └─────────────┘
+                           │
+                    ┌──────┴──────┐
+                    │project_events│
+                    ├─────────────┤
+                    │ project_id  │
+                    │ event_type  │
+                    │ description │
+                    │ created_at  │
+                    └─────────────┘

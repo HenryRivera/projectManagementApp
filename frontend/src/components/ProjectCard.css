@@ -1,0 +1,148 @@
+.project-card {
+  background: white;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+
+.project-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.project-card.selected {
+  border: 2px solid #007bff;
+  box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+.project-card.deleted {
+  opacity: 0.7;
+  background: #f8f9fa;
+  border: 2px dashed #dc3545;
+}
+
+.project-card.deleted:hover {
+  opacity: 0.85;
+}
+
+.deleted-overlay {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 1;
+}
+
+.deleted-badge {
+  background: #dc3545;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.card-checkbox {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.card-checkbox input {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  margin-bottom: 10px;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  color: #333;
+  flex: 1;
+  margin-right: 10px;
+}
+
+.card-badges {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.badge {
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: white;
+  text-transform: capitalize;
+}
+
+.card-description {
+  color: #666;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  min-height: 40px;
+}
+
+.card-progress {
+  margin-bottom: 15px;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+  font-size: 0.875rem;
+  color: #666;
+}
+
+.progress-bar {
+  height: 8px;
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background-color: #007bff;
+  transition: width 0.3s;
+}
+
+.card-footer {
+  border-top: 1px solid #e9ecef;
+  padding-top: 15px;
+}
+
+.card-info {
+  margin-bottom: 10px;
+}
+
+.info-item {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 5px;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.tag {
+  background-color: #e9ecef;
+  color: #495057;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+}

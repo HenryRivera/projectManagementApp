@@ -1,0 +1,78 @@
+.bulk-operations {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 4px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.bulk-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.btn-clear {
+  background: #6c757d;
+  color: white;
+  border: none;
+  padding: 5px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-clear:hover {
+  background: #5a6268;
+}
+
+.bulk-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.bulk-controls {
+  display: flex;
+  gap: 15px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.bulk-control {
+  display: flex;
+  flex-direction: column;
+  min-width: 200px;
+}
+
+.bulk-control label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 5px;
+}
+
+.bulk-control input,
+.bulk-control select {
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.btn-apply {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  height: fit-content;
+}
+
+.btn-apply:hover:not(:disabled) {
+  background: #0056b3;
+}
+
+.btn-apply:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
