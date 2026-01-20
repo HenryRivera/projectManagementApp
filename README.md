@@ -7,7 +7,7 @@ A full-stack project management application with real-time updates, built with R
 - **Project CRUD Operations**: Create, read, update, and soft delete projects
 - **Paginated Listing**: Projects displayed as cards with pagination
 - **Sorting & Filtering**: Sort by title, updated date, progress. Filter by status, owner, tag, and health
-- **Project Detail View**: 
+- **Project Detail View**:
   - Summary with project information
   - Milestones with progress tracking (derived percentage)
   - Team roster with roles and capacity
@@ -171,12 +171,21 @@ Frontend will be available at http://localhost:3000
 - `POST /api/projects/{id}/recover` - Recover deleted project
 - `POST /api/projects/bulk-update` - Bulk update projects
 
+### Users
+- `GET /api/users` - List all users
+- `GET /api/users/{id}` - Get user details
+- `POST /api/users` - Create user
+
+### Tags
+- `GET /api/tags` - List all tags
+
 ### Milestones
 - `POST /api/projects/{id}/milestones` - Create milestone
 - `PUT /api/milestones/{id}` - Update milestone
 
 ### Team Members
 - `POST /api/projects/{id}/team-members` - Add team member
+- `PUT /api/team-members/{id}` - Update team member (role, capacity)
 - `DELETE /api/team-members/{id}` - Remove team member
 
 ### Real-Time
