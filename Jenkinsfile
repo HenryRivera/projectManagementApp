@@ -27,7 +27,14 @@ pipeline {
             steps {
                 sh '''
                     echo "🚀 Deploying..."
-                    docker-compose down || true
+                    
+                    # Force remove any existing containers with our names
+                    docker rm -f project-management-backend project-management-frontend project-management-nginx 2>/dev/null || true
+                    
+                    # Remove old networks if they exist
+                    docker network rm aida_app-network 2>/dev/null || true
+                    
+                    docker-compose down --remove-orphans || true
                     docker-compose up -d
                     echo "✅ Deployed"
                 '''
