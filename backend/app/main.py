@@ -84,6 +84,11 @@ async def broadcast_project_update(project_id: int, event_type: str, data: dict)
     }
     await manager.broadcast(message)
 
+@app.get("/api/health")
+def health_check():
+    """Health check endpoint for CI/CD pipeline"""
+    return {"status": "healthy", "timestamp": datetime.now().isoformat()}
+
 # User endpoints
 @app.post("/api/users", response_model=schemas.UserResponse)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
