@@ -9,18 +9,17 @@ A full-stack project management application with real-time updates, CI/CD pipeli
 ### Prerequisites
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running
 
-### 1. Clone & Run
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/HenryRivera/projectManagementApp.git
 cd projectManagementApp
-docker compose up -d --build
 ```
 
-### 2. Load Sample Data (Optional)
+### 2. Start the Application
 
 ```bash
-docker exec project-management-backend python seed_mock_data.py
+./start.sh
 ```
 
 ### 3. Access the Application
@@ -30,11 +29,12 @@ docker exec project-management-backend python seed_mock_data.py
 | **Frontend** | http://localhost |
 | **API Docs** | http://localhost/api/docs |
 | **API Health** | http://localhost/api/health |
+| **Jenkins** | http://localhost:8081 (if installed) |
 
 ### 4. Stop the Application
 
 ```bash
-docker compose down
+./stop.sh
 ```
 
 ---
