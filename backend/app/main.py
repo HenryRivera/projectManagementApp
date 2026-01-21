@@ -13,7 +13,13 @@ from app.database import SessionLocal, engine, get_db
 # Create tables
 models.Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Project Management API", version="1.0.0")
+app = FastAPI(
+    title="Project Management API",
+    version="1.0.0",
+    docs_url="/api/docs",
+    redoc_url="/api/redoc",
+    openapi_url="/api/openapi.json"
+)
 
 # CORS middleware
 app.add_middleware(
@@ -83,6 +89,21 @@ async def broadcast_project_update(project_id: int, event_type: str, data: dict)
         "timestamp": datetime.utcnow().isoformat()
     }
     await manager.broadcast(message)
+
+@app.get("/api")
+def api_root():
+    """API root endpoint with available resources"""
+    return {
+        "message": "Project Management API",
+        "version": "1.0.0",
+        "docs": "/api/docs",
+        "health": "/api/health",
+        "endpoints": {
+            "projects": "/api/projects",
+            "users": "/api/users",
+            "tags": "/api/tags"
+        }
+    }
 
 @app.get("/api/health")
 def health_check():
