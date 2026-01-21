@@ -65,7 +65,7 @@ cd projectManagementApp
 | **Backend** | FastAPI, SQLAlchemy, Pydantic |
 | **Database** | SQLite (PostgreSQL ready) |
 | **Real-Time** | WebSockets, Server-Sent Events |
-| **Deployment** | Docker, Nginx, Kubernetes |
+| **Deployment** | Docker, Docker Compose, Nginx |
 | **CI/CD** | GitHub Actions, Jenkins |
 
 ---
@@ -92,7 +92,7 @@ projectManagementApp/
 │   └── package.json
 ├── nginx/                   # Reverse proxy config
 │   └── default.conf
-├── k8s/                     # Kubernetes manifests
+├── scripts/                 # Build & deploy scripts
 ├── .github/workflows/       # GitHub Actions CI
 ├── docker-compose.yml
 ├── Jenkinsfile             # Jenkins pipeline
@@ -120,7 +120,6 @@ projectManagementApp/
 |--------|----------|-------------|
 | POST | `/api/projects/{id}/milestones` | Add milestone |
 | PUT | `/api/milestones/{id}` | Update milestone |
-| DELETE | `/api/milestones/{id}` | Delete milestone |
 
 ### Team Members
 | Method | Endpoint | Description |
@@ -133,15 +132,17 @@ projectManagementApp/
 | Method | Endpoint | Description |
 |--------|----------|-------------|
 | GET | `/api/users` | List users |
+| GET | `/api/users/{id}` | Get user by ID |
 | POST | `/api/users` | Create user |
 | GET | `/api/tags` | List tags |
 
 ### Real-Time & Health
 | Method | Endpoint | Description |
 |--------|----------|-------------|
+| GET | `/api` | API info and available endpoints |
+| GET | `/api/health` | Health check |
 | WebSocket | `/ws` | Real-time updates |
 | GET | `/events/stream` | SSE stream |
-| GET | `/api/health` | Health check |
 
 ---
 
@@ -210,36 +211,6 @@ docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
 ```
 
 Configure at http://localhost:8081 with Pipeline from SCM pointing to this repo.
-
----
-
-## Kubernetes Deployment
-
-### Deploy to Kubernetes
-
-```bash
-# Update with your Docker Hub username
-./k8s/deploy.sh your-dockerhub-username
-```
-
-### Manual Deployment
-
-```bash
-kubectl apply -f k8s/namespace.yaml
-kubectl apply -f k8s/configmap.yaml
-kubectl apply -f k8s/persistent-volume.yaml
-kubectl apply -f k8s/backend-deployment.yaml
-kubectl apply -f k8s/frontend-deployment.yaml
-kubectl apply -f k8s/ingress.yaml
-```
-
-### Verify Deployment
-
-```bash
-kubectl get pods -n project-management
-kubectl get services -n project-management
-kubectl get ingress -n project-management
-```
 
 ---
 
@@ -321,13 +292,7 @@ docker compose up -d
 ### Backend
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `DATABASE_URL` | `sqlite:///./projects.db` | Database connection string |
-
-### Frontend
-| Variable | Default | Description |
-|----------|---------|-------------|
-| `VITE_API_URL` | `http://localhost:8000` | Backend API URL |
-| `VITE_WS_URL` | `ws://localhost:8000` | WebSocket URL |
+| `DATABASE_URL` | `sqlite:///./data/projects.db` | Database connection string |
 
 ---
 
@@ -335,10 +300,9 @@ docker compose up -d
 
 | Script | Description |
 |--------|-------------|
-| `./start.sh` | Start app + Jenkins |
-| `./stop.sh` | Stop app + Jenkins |
-| `./scripts/build-and-push.sh` | Build & push Docker images |
-| `./k8s/deploy.sh` | Deploy to Kubernetes |
+| `./start.sh` | Start the application (and Jenkins if installed) |
+| `./stop.sh` | Stop the application (and Jenkins if running) |
+| `./scripts/build-and-push.sh` | Build & push Docker images to Docker Hub |
 
 ---
 
