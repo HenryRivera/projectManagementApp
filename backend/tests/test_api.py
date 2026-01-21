@@ -93,7 +93,7 @@ class TestProjects:
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
-        
+
         # Get the project
         response = client.get(f"/api/projects/{project_id}")
         assert response.status_code == 200
@@ -115,7 +115,7 @@ class TestProjects:
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
-        
+
         # Update the project
         update_data = {"title": "Updated Project", "progress": 50}
         response = client.put(f"/api/projects/{project_id}", json=update_data)
@@ -135,11 +135,11 @@ class TestProjects:
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
-        
+
         # Delete the project
         response = client.delete(f"/api/projects/{project_id}")
         assert response.status_code == 200
-        
+
         # Verify it's deleted (soft delete - should not appear in list)
         list_response = client.get("/api/projects")
         assert list_response.json()["total"] == 0
@@ -156,14 +156,14 @@ class TestProjects:
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
-        
+
         # Delete the project
         client.delete(f"/api/projects/{project_id}")
-        
+
         # Recover the project
         response = client.post(f"/api/projects/{project_id}/recover")
         assert response.status_code == 200
-        
+
         # Verify it's recovered
         get_response = client.get(f"/api/projects/{project_id}")
         assert get_response.status_code == 200
@@ -180,7 +180,7 @@ class TestProjects:
                 "progress": 0
             }
             client.post("/api/projects", json=project_data)
-        
+
         # Get first page
         response = client.get("/api/projects?skip=0&limit=10")
         data = response.json()
@@ -234,7 +234,7 @@ class TestMilestones:
         }
         project_response = client.post("/api/projects", json=project_data)
         project_id = project_response.json()["id"]
-        
+
         # Create a milestone
         milestone_data = {
             "title": "Milestone 1",
@@ -257,7 +257,7 @@ class TestMilestones:
         }
         project_response = client.post("/api/projects", json=project_data)
         project_id = project_response.json()["id"]
-        
+
         # Create a milestone
         milestone_data = {
             "title": "Milestone 1",
@@ -266,7 +266,7 @@ class TestMilestones:
         }
         milestone_response = client.post(f"/api/projects/{project_id}/milestones", json=milestone_data)
         milestone_id = milestone_response.json()["id"]
-        
+
         # Update the milestone
         update_data = {"title": "Updated Milestone", "status": "completed"}
         response = client.put(f"/api/milestones/{milestone_id}", json=update_data)
@@ -290,12 +290,12 @@ class TestTeamMembers:
         }
         project_response = client.post("/api/projects", json=project_data)
         project_id = project_response.json()["id"]
-        
+
         # Create a user
         user_data = {"name": "John Doe", "email": "john@example.com"}
         user_response = client.post("/api/users", json=user_data)
         user_id = user_response.json()["id"]
-        
+
         # Add team member
         team_member_data = {
             "user_id": user_id,
@@ -318,12 +318,12 @@ class TestTeamMembers:
         }
         project_response = client.post("/api/projects", json=project_data)
         project_id = project_response.json()["id"]
-        
+
         # Create a user
         user_data = {"name": "John Doe", "email": "john@example.com"}
         user_response = client.post("/api/users", json=user_data)
         user_id = user_response.json()["id"]
-        
+
         # Add team member
         team_member_data = {
             "user_id": user_id,
@@ -332,7 +332,7 @@ class TestTeamMembers:
         }
         member_response = client.post(f"/api/projects/{project_id}/team-members", json=team_member_data)
         member_id = member_response.json()["id"]
-        
+
         # Update capacity
         update_data = {"capacity": 50}
         response = client.put(f"/api/team-members/{member_id}", json=update_data)

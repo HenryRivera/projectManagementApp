@@ -15,23 +15,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           cd backend
           pip install ruff black
           pip install -r requirements.txt
-      
+
       - name: Run Ruff (linting)
         run: |
           cd backend
           ruff check app/ --output-format=github || true
-      
+
       - name: Run Black (formatting check)
         run: |
           cd backend
@@ -42,17 +42,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      
+
       - name: Install dependencies
         run: |
           cd frontend
           npm install
-      
+
       - name: Run ESLint
         run: |
           cd frontend
@@ -67,18 +67,18 @@ jobs:
     needs: lint-backend
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           cd backend
           pip install pytest pytest-cov pytest-asyncio httpx
           pip install -r requirements.txt
-      
+
       - name: Run tests with coverage
         run: |
           cd backend
@@ -93,17 +93,17 @@ jobs:
     needs: lint-frontend
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-      
+
       - name: Install dependencies
         run: |
           cd frontend
           npm install
-      
+
       - name: Run tests
         run: |
           cd frontend
@@ -118,38 +118,38 @@ jobs:
     needs: [test-backend, test-frontend]
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Build Docker images
         run: docker compose build
-      
+
       - name: Start services
         run: docker compose up -d
-      
+
       - name: Wait for services to be ready
         run: |
           echo "Waiting for services..."
           sleep 20
-      
+
       - name: Check container health
         run: |
           docker compose ps
           docker compose logs
-      
+
       - name: Test health endpoint
         run: |
           curl -f http://localhost/api/health || exit 1
-      
+
       - name: Test API endpoints
         run: |
           # Test projects endpoint
           curl -f http://localhost/api/projects || exit 1
-          
+
           # Test users endpoint
           curl -f http://localhost/api/users || exit 1
-          
+
           # Test tags endpoint
           curl -f http://localhost/api/tags || exit 1
-      
+
       - name: Stop services
         if: always()
         run: docker compose down -v
@@ -163,17 +163,17 @@ jobs:
     needs: lint-backend
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+
       - name: Install dependencies
         run: |
           cd backend
           pip install -r requirements.txt
-      
+
       - name: Test database initialization
         run: |
           cd backend

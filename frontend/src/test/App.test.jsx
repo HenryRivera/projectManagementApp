@@ -19,9 +19,9 @@ describe('App', () => {
 
   it('displays loading state initially', () => {
     fetch.mockImplementationOnce(() => new Promise(() => {}));
-    
+
     render(<App />);
-    
+
     // App should render without crashing
     expect(document.body).toBeTruthy();
   });
@@ -34,11 +34,11 @@ describe('App', () => {
       page_size: 20,
       total_pages: 0
     };
-    
+
     fetch.mockResolvedValueOnce(createFetchResponse(mockProjects));
-    
+
     render(<App />);
-    
+
     // App should render
     expect(document.body).toBeTruthy();
   });
@@ -62,11 +62,11 @@ describe('App', () => {
       page_size: 20,
       total_pages: 1
     };
-    
+
     fetch.mockResolvedValueOnce(createFetchResponse(mockProjects));
-    
+
     render(<App />);
-    
+
     await waitFor(() => {
       expect(screen.getByText('Test Project')).toBeInTheDocument();
     }, { timeout: 3000 });
