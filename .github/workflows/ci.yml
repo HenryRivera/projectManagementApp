@@ -179,7 +179,7 @@ jobs:
           cd backend
           python -c "
           from app.database import engine, Base
-          from app.models import Project, Milestone, TeamMember, Event, User, Tag
+          from app.models import Project, Milestone, TeamMember, ProjectEvent, User, Tag
           Base.metadata.create_all(bind=engine)
           print('✅ Database migrations successful')
           "
