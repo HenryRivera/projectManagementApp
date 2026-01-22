@@ -71,9 +71,7 @@ class TestProjects:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         response = client.post("/api/projects", json=project_data)
         assert response.status_code == 200
@@ -87,9 +85,7 @@ class TestProjects:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
@@ -109,19 +105,16 @@ class TestProjects:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
 
         # Update the project
-        update_data = {"title": "Updated Project", "progress": 50}
+        update_data = {"title": "Updated Project"}
         response = client.put(f"/api/projects/{project_id}", json=update_data)
         assert response.status_code == 200
         assert response.json()["title"] == "Updated Project"
-        assert response.json()["progress"] == 50
 
     def test_delete_project(self, client):
         # Create a project first
@@ -129,9 +122,7 @@ class TestProjects:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
@@ -150,9 +141,7 @@ class TestProjects:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
@@ -175,9 +164,7 @@ class TestProjects:
                 "title": f"Project {i}",
                 "description": "A test project",
                 "status": "active",
-                "health": "on_track",
-                "owner": "Test Owner",
-                "progress": 0
+                "health": "healthy"
             }
             client.post("/api/projects", json=project_data)
 
@@ -228,9 +215,7 @@ class TestMilestones:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         project_response = client.post("/api/projects", json=project_data)
         project_id = project_response.json()["id"]
@@ -238,7 +223,6 @@ class TestMilestones:
         # Create a milestone
         milestone_data = {
             "title": "Milestone 1",
-            "status": "pending",
             "due_date": "2026-02-01T00:00:00"
         }
         response = client.post(f"/api/projects/{project_id}/milestones", json=milestone_data)
@@ -251,9 +235,7 @@ class TestMilestones:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         project_response = client.post("/api/projects", json=project_data)
         project_id = project_response.json()["id"]
@@ -261,14 +243,13 @@ class TestMilestones:
         # Create a milestone
         milestone_data = {
             "title": "Milestone 1",
-            "status": "pending",
             "due_date": "2026-02-01T00:00:00"
         }
         milestone_response = client.post(f"/api/projects/{project_id}/milestones", json=milestone_data)
         milestone_id = milestone_response.json()["id"]
 
         # Update the milestone
-        update_data = {"title": "Updated Milestone", "status": "completed"}
+        update_data = {"title": "Updated Milestone", "completed": True}
         response = client.put(f"/api/milestones/{milestone_id}", json=update_data)
         assert response.status_code == 200
         assert response.json()["title"] == "Updated Milestone"
@@ -284,9 +265,7 @@ class TestTeamMembers:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         project_response = client.post("/api/projects", json=project_data)
         project_id = project_response.json()["id"]
@@ -299,12 +278,12 @@ class TestTeamMembers:
         # Add team member
         team_member_data = {
             "user_id": user_id,
-            "role": "Developer",
-            "capacity": 100
+            "role": "developer",
+            "capacity": 1.0
         }
         response = client.post(f"/api/projects/{project_id}/team-members", json=team_member_data)
         assert response.status_code == 200
-        assert response.json()["role"] == "Developer"
+        assert response.json()["role"] == "developer"
 
     def test_update_team_member_capacity(self, client):
         # Create a project first
@@ -312,9 +291,7 @@ class TestTeamMembers:
             "title": "Test Project",
             "description": "A test project",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         project_response = client.post("/api/projects", json=project_data)
         project_id = project_response.json()["id"]
@@ -327,17 +304,17 @@ class TestTeamMembers:
         # Add team member
         team_member_data = {
             "user_id": user_id,
-            "role": "Developer",
-            "capacity": 100
+            "role": "developer",
+            "capacity": 1.0
         }
         member_response = client.post(f"/api/projects/{project_id}/team-members", json=team_member_data)
         member_id = member_response.json()["id"]
 
         # Update capacity
-        update_data = {"capacity": 50}
+        update_data = {"capacity": 0.5}
         response = client.put(f"/api/team-members/{member_id}", json=update_data)
         assert response.status_code == 200
-        assert response.json()["capacity"] == 50
+        assert response.json()["capacity"] == 0.5
 
 
 # ============================================
@@ -358,9 +335,8 @@ class TestWebSocket:
                 "title": "WebSocket Test Project",
                 "description": "Testing WebSocket notifications",
                 "status": "active",
-                "health": "on_track",
+                "health": "healthy",
                 "owner": "Test Owner",
-                "progress": 0
             }
             response = client.post("/api/projects", json=project_data)
             assert response.status_code == 200
@@ -378,9 +354,7 @@ class TestWebSocket:
             "title": "Update Test Project",
             "description": "Testing update notifications",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
@@ -403,9 +377,7 @@ class TestWebSocket:
             "title": "Delete Test Project",
             "description": "Testing delete notifications",
             "status": "active",
-            "health": "on_track",
-            "owner": "Test Owner",
-            "progress": 0
+            "health": "healthy"
         }
         create_response = client.post("/api/projects", json=project_data)
         project_id = create_response.json()["id"]
