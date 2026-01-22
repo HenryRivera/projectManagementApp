@@ -55,7 +55,7 @@ class TestHealthCheck:
 
 
 # ============================================
-# Project Tests
+# Project Tests -
 # ============================================
 class TestProjects:
     def test_list_projects_empty(self, client):
