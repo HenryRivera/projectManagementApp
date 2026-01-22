@@ -158,6 +158,10 @@ class TestProjects:
         assert get_response.status_code == 200
 
     def test_project_pagination(self, client):
+        # Get initial count
+        initial_response = client.get("/api/projects?skip=0&limit=1")
+        initial_total = initial_response.json()["total"]
+        
         # Create multiple projects
         for i in range(15):
             project_data = {
@@ -172,7 +176,7 @@ class TestProjects:
         response = client.get("/api/projects?skip=0&limit=10")
         data = response.json()
         assert len(data["items"]) == 10
-        assert data["total"] == 15
+        assert data["total"] == initial_total + 15
 
 
 # ============================================
