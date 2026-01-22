@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './ProjectCard.css'
 
 const ProjectCard = ({ project, isSelected, onSelect, onClick }) => {
@@ -142,6 +143,24 @@ const ProjectCard = ({ project, isSelected, onSelect, onClick }) => {
       </div>
     </div>
   )
+}
+
+ProjectCard.propTypes = {
+  project: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    short_description: PropTypes.string,
+    status: PropTypes.string,
+    health: PropTypes.string,
+    progress: PropTypes.number,
+    updated_at: PropTypes.string,
+    deleted_at: PropTypes.string,
+    owner: PropTypes.object,
+    tags: PropTypes.array,
+  }).isRequired,
+  isSelected: PropTypes.bool,
+  onSelect: PropTypes.func,
+  onClick: PropTypes.func,
 }
 
 export default ProjectCard

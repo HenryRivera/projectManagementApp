@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import './BulkOperations.css'
 
 const BulkOperations = ({ selectedCount, onBulkUpdate, onClearSelection }) => {
@@ -62,6 +63,12 @@ const BulkOperations = ({ selectedCount, onBulkUpdate, onClearSelection }) => {
       </form>
     </div>
   )
+}
+
+BulkOperations.propTypes = {
+  selectedCount: PropTypes.number.isRequired,
+  onBulkUpdate: PropTypes.func.isRequired,
+  onClearSelection: PropTypes.func.isRequired,
 }
 
 export default BulkOperations

@@ -1,8 +1,9 @@
-from sqlalchemy.orm import Session
-from sqlalchemy import or_, and_, func, desc, asc
-from typing import List, Optional
-from app import models, schemas
 from datetime import datetime
+
+from sqlalchemy import asc, desc, or_
+from sqlalchemy.orm import Session
+
+from app import models, schemas
 
 def calculate_project_progress(db: Session, project_id: int) -> float:
     """Calculate project progress based on completed milestones"""
@@ -88,7 +89,7 @@ def create_project(db: Session, project: schemas.ProjectCreate):
 def get_project(db: Session, project_id: int, include_deleted: bool = False):
     query = db.query(models.Project).filter(models.Project.id == project_id)
     if not include_deleted:
-        query = query.filter(models.Project.deleted_at == None)
+        query = query.filter(models.Project.deleted_at is None)
     return query.first()
 
 def get_projects(
@@ -104,10 +105,10 @@ def get_projects(
     # Soft delete filter
     if filter_params.only_deleted:
         # Show only deleted projects
-        query = query.filter(models.Project.deleted_at != None)
+        query = query.filter(models.Project.deleted_at is not None)
     elif not filter_params.include_deleted:
         # Exclude deleted projects (default)
-        query = query.filter(models.Project.deleted_at == None)
+        query = query.filter(models.Project.deleted_at is None)
     # else: include_deleted=True shows all projects
 
     # Status filter
@@ -227,7 +228,6 @@ def bulk_update_projects(db: Session, bulk_update: schemas.BulkUpdateRequest):
 
             # Update status
             if bulk_update.status:
-                old_status = db_project.status
                 db_project.status = bulk_update.status
                 db_project.version += 1
                 create_project_event(db, project_id, "status_changed",
