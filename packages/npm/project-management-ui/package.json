@@ -1,0 +1,47 @@
+{
+  "name": "@henryrivera/project-management-ui",
+  "version": "1.0.0",
+  "description": "Reusable React components for project management applications",
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "rollup -c",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"No tests yet\""
+  },
+  "peerDependencies": {
+    "react": ">=17.0.0",
+    "react-dom": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@rollup/plugin-commonjs": "^25.0.0",
+    "@rollup/plugin-node-resolve": "^15.0.0",
+    "@rollup/plugin-typescript": "^11.0.0",
+    "@types/react": "^19.2.9",
+    "@types/react-dom": "^19.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "rollup": "^4.0.0",
+    "tslib": "^2.6.0",
+    "typescript": "^5.0.0"
+  },
+  "keywords": [
+    "react",
+    "project-management",
+    "components",
+    "ui",
+    "progress-bar",
+    "project-card"
+  ],
+  "author": "Henry Rivera",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HenryRivera/projectManagementApp"
+  },
+  "homepage": "https://github.com/HenryRivera/projectManagementApp#readme"
+}

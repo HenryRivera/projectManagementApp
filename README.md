@@ -303,6 +303,207 @@ docker compose up -d
 | `./start.sh` | Start the application (and Jenkins if installed) |
 | `./stop.sh` | Stop the application (and Jenkins if running) |
 | `./scripts/build-and-push.sh` | Build & push Docker images to Docker Hub |
+| `./scripts/publish-npm.sh` | Build & publish NPM package |
+| `./scripts/publish-pypi.sh` | Build & publish PyPI package |
+
+---
+
+## Publishable Packages
+
+This project includes reusable packages that can be published to NPM and PyPI.
+
+### NPM Package: `@henryrivera/project-management-ui`
+
+A React component library for project management interfaces.
+
+#### Installation
+
+```bash
+npm install @henryrivera/project-management-ui
+```
+
+#### Components
+
+##### ProjectCard
+
+Displays a project summary card with progress indicator.
+
+```tsx
+import { ProjectCard } from '@henryrivera/project-management-ui';
+
+<ProjectCard
+  id={1}
+  name="Website Redesign"
+  description="Complete overhaul of company website"
+  status="In Progress"
+  progress={65}
+  onClick={(id) => console.log('Clicked project:', id)}
+/>
+```
+
+**Props:**
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `id` | `number` | ✅ | Project unique identifier |
+| `name` | `string` | ✅ | Project name |
+| `description` | `string` | ❌ | Project description |
+| `status` | `string` | ✅ | Current status |
+| `progress` | `number` | ❌ | Progress percentage (0-100) |
+| `onClick` | `(id: number) => void` | ❌ | Click handler |
+
+##### ProgressBar
+
+A customizable progress bar component.
+
+```tsx
+import { ProgressBar } from '@henryrivera/project-management-ui';
+
+<ProgressBar value={75} max={100} showLabel height={8} />
+```
+
+**Props:**
+
+| Prop | Type | Required | Default | Description |
+|------|------|----------|---------|-------------|
+| `value` | `number` | ✅ | - | Current value |
+| `max` | `number` | ❌ | `100` | Maximum value |
+| `showLabel` | `boolean` | ❌ | `false` | Show percentage label |
+| `height` | `number` | ❌ | `8` | Height in pixels |
+| `color` | `string` | ❌ | - | Custom bar color |
+| `backgroundColor` | `string` | ❌ | - | Custom background color |
+
+#### Publishing to NPM
+
+```bash
+cd packages/npm/project-management-ui
+npm login
+npm run build
+npm publish --access public
+```
+
+---
+
+### PyPI Package: `project-management-sdk`
+
+A Python SDK for interacting with the Project Management API.
+
+#### Installation
+
+```bash
+pip install project-management-sdk
+```
+
+#### Quick Start
+
+```python
+from project_management_sdk import ProjectManagementClient, ProjectCreate
+
+# Initialize client
+client = ProjectManagementClient(base_url="http://localhost/api")
+
+# Create a project
+new_project = ProjectCreate(
+    name="Website Redesign",
+    description="Complete overhaul of company website",
+    status="Planning"
+)
+project = client.create_project(new_project)
+print(f"Created project: {project.name} (ID: {project.id})")
+
+# List all projects
+projects = client.get_projects()
+for p in projects:
+    print(f"- {p.name}: {p.status}")
+
+# Update a project
+from project_management_sdk import ProjectUpdate
+updated = client.update_project(project.id, ProjectUpdate(status="In Progress", progress=25))
+
+# Delete a project
+client.delete_project(project.id)
+```
+
+#### Models
+
+##### Project
+
+```python
+class Project(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    status: str
+    progress: int
+    priority: str
+    start_date: Optional[date]
+    end_date: Optional[date]
+    created_at: datetime
+    updated_at: datetime
+    version: int
+    is_deleted: bool
+    milestones: List[Milestone]
+    team_members: List[TeamMember]
+    tags: List[Tag]
+```
+
+##### ProjectCreate / ProjectUpdate
+
+```python
+class ProjectCreate(BaseModel):
+    name: str
+    description: Optional[str]
+    status: str = "Planning"
+    progress: int = 0
+    priority: str = "Medium"
+    start_date: Optional[date]
+    end_date: Optional[date]
+
+class ProjectUpdate(BaseModel):
+    name: Optional[str]
+    description: Optional[str]
+    status: Optional[str]
+    progress: Optional[int]
+    priority: Optional[str]
+    start_date: Optional[date]
+    end_date: Optional[date]
+    version: Optional[int]  # For optimistic concurrency
+```
+
+#### API Methods
+
+| Method | Description |
+|--------|-------------|
+| `get_projects(skip, limit)` | List projects with pagination |
+| `get_project(id)` | Get a single project by ID |
+| `create_project(project)` | Create a new project |
+| `update_project(id, project)` | Update an existing project |
+| `delete_project(id)` | Soft delete a project |
+| `health_check()` | Check API health status |
+
+#### Async Support
+
+```python
+import asyncio
+from project_management_sdk import AsyncProjectManagementClient
+
+async def main():
+    async with AsyncProjectManagementClient(base_url="http://localhost/api") as client:
+        projects = await client.get_projects()
+        for p in projects:
+            print(f"- {p.name}")
+
+asyncio.run(main())
+```
+
+#### Publishing to PyPI
+
+```bash
+cd packages/pypi/project-management-sdk
+pip install build twine
+python -m build
+twine upload dist/*
+```
 
 ---
 
