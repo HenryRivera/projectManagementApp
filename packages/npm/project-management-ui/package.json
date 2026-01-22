@@ -1,6 +1,7 @@
 {
   "name": "@henryrivera/project-management-ui",
   "version": "1.0.0",
+  "type": "module",
   "description": "Reusable React components for project management applications",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
