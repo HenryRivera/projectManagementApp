@@ -9,11 +9,11 @@ const BulkOperations = ({ selectedCount, onBulkUpdate, onClearSelection }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     const updateData = {}
-    
+
     if (status) {
       updateData.status = status
     }
-    
+
     if (tagNames.trim()) {
       updateData.tag_names = tagNames.split(',').map(t => t.trim()).filter(t => t)
     }
