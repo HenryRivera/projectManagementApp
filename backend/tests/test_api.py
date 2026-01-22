@@ -161,7 +161,7 @@ class TestProjects:
         # Get initial count
         initial_response = client.get("/api/projects?skip=0&limit=1")
         initial_total = initial_response.json()["total"]
-        
+
         # Create multiple projects
         for i in range(15):
             project_data = {
