@@ -6,8 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "project-management-sdk"
 version = "1.0.0"
 description = "Python SDK for project management with Pydantic models and API client"
-readme = "README.md"
-license = {text = "MIT"}
+license = "MIT"
 authors = [
     {name = "Henry Rivera", email = "henry@example.com"}
 ]
@@ -15,7 +14,6 @@ keywords = ["project-management", "sdk", "pydantic", "api-client"]
 classifiers = [
     "Development Status :: 4 - Beta",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",

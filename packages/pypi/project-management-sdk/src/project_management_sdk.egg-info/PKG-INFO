@@ -1,0 +1,29 @@
+Metadata-Version: 2.4
+Name: project-management-sdk
+Version: 1.0.0
+Summary: Python SDK for project management with Pydantic models and API client
+Author-email: Henry Rivera <henry@example.com>
+License: MIT
+Project-URL: Homepage, https://github.com/HenryRivera/projectManagementApp
+Project-URL: Repository, https://github.com/HenryRivera/projectManagementApp
+Project-URL: Documentation, https://github.com/HenryRivera/projectManagementApp#readme
+Keywords: project-management,sdk,pydantic,api-client
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Classifier: Programming Language :: Python :: 3.12
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.9
+Description-Content-Type: text/markdown
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: httpx>=0.24.0
+Provides-Extra: dev
+Requires-Dist: pytest>=7.0.0; extra == "dev"
+Requires-Dist: pytest-asyncio>=0.21.0; extra == "dev"
+Requires-Dist: black>=23.0.0; extra == "dev"
+Requires-Dist: ruff>=0.1.0; extra == "dev"
