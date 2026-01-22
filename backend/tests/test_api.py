@@ -338,3 +338,84 @@ class TestTeamMembers:
         response = client.put(f"/api/team-members/{member_id}", json=update_data)
         assert response.status_code == 200
         assert response.json()["capacity"] == 50
+
+
+# ============================================
+# WebSocket Tests
+# ============================================
+class TestWebSocket:
+    def test_websocket_connection(self, client):
+        """Test that WebSocket connection can be established."""
+        with client.websocket_connect("/ws") as websocket:
+            # Connection successful if no exception raised
+            assert websocket is not None
+
+    def test_websocket_receives_project_create(self, client):
+        """Test that WebSocket receives notification on project creation."""
+        with client.websocket_connect("/ws") as websocket:
+            # Create a project via REST API
+            project_data = {
+                "title": "WebSocket Test Project",
+                "description": "Testing WebSocket notifications",
+                "status": "active",
+                "health": "on_track",
+                "owner": "Test Owner",
+                "progress": 0
+            }
+            response = client.post("/api/projects", json=project_data)
+            assert response.status_code == 200
+
+            # WebSocket should receive the notification
+            data = websocket.receive_json()
+            assert data["type"] == "project_update"
+            assert data["event_type"] == "created"
+            assert data["data"]["title"] == "WebSocket Test Project"
+
+    def test_websocket_receives_project_update(self, client):
+        """Test that WebSocket receives notification on project update."""
+        # Create a project first
+        project_data = {
+            "title": "Update Test Project",
+            "description": "Testing update notifications",
+            "status": "active",
+            "health": "on_track",
+            "owner": "Test Owner",
+            "progress": 0
+        }
+        create_response = client.post("/api/projects", json=project_data)
+        project_id = create_response.json()["id"]
+
+        with client.websocket_connect("/ws") as websocket:
+            # Update the project
+            update_data = {"title": "Updated via WebSocket Test"}
+            client.put(f"/api/projects/{project_id}", json=update_data)
+
+            # WebSocket should receive the notification
+            data = websocket.receive_json()
+            assert data["type"] == "project_update"
+            assert data["event_type"] == "updated"
+            assert data["project_id"] == project_id
+
+    def test_websocket_receives_project_delete(self, client):
+        """Test that WebSocket receives notification on project deletion."""
+        # Create a project first
+        project_data = {
+            "title": "Delete Test Project",
+            "description": "Testing delete notifications",
+            "status": "active",
+            "health": "on_track",
+            "owner": "Test Owner",
+            "progress": 0
+        }
+        create_response = client.post("/api/projects", json=project_data)
+        project_id = create_response.json()["id"]
+
+        with client.websocket_connect("/ws") as websocket:
+            # Delete the project
+            client.delete(f"/api/projects/{project_id}")
+
+            # WebSocket should receive the notification
+            data = websocket.receive_json()
+            assert data["type"] == "project_update"
+            assert data["event_type"] == "deleted"
+            assert data["project_id"] == project_id
