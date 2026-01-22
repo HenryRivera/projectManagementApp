@@ -89,7 +89,7 @@ def create_project(db: Session, project: schemas.ProjectCreate):
 def get_project(db: Session, project_id: int, include_deleted: bool = False):
     query = db.query(models.Project).filter(models.Project.id == project_id)
     if not include_deleted:
-        query = query.filter(models.Project.deleted_at is None)
+        query = query.filter(models.Project.deleted_at == None)  # noqa: E711
     return query.first()
 
 def get_projects(
@@ -105,10 +105,10 @@ def get_projects(
     # Soft delete filter
     if filter_params.only_deleted:
         # Show only deleted projects
-        query = query.filter(models.Project.deleted_at is not None)
+        query = query.filter(models.Project.deleted_at != None)  # noqa: E711
     elif not filter_params.include_deleted:
         # Exclude deleted projects (default)
-        query = query.filter(models.Project.deleted_at is None)
+        query = query.filter(models.Project.deleted_at == None)  # noqa: E711
     # else: include_deleted=True shows all projects
 
     # Status filter
