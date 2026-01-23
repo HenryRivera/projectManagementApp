@@ -240,7 +240,7 @@ def bulk_update_projects(db: Session, bulk_update: schemas.BulkUpdateRequest):
                     pt.tag_id for pt in db.query(models.ProjectTag)
                     .filter(models.ProjectTag.project_id == project_id).all()
                 )
-                
+
                 for tag_name in bulk_update.tag_names:
                     tag = get_or_create_tag(db, tag_name)
                     # Only add if not already associated with this project
