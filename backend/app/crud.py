@@ -233,13 +233,20 @@ def bulk_update_projects(db: Session, bulk_update: schemas.BulkUpdateRequest):
                 create_project_event(db, project_id, "status_changed",
                                    f"Status changed to {bulk_update.status.value}")
 
-            # Update tags
+            # Append tags (don't replace existing ones)
             if bulk_update.tag_names is not None:
-                db.query(models.ProjectTag).filter(models.ProjectTag.project_id == project_id).delete()
+                # Get existing tag IDs for this project
+                existing_tag_ids = set(
+                    pt.tag_id for pt in db.query(models.ProjectTag)
+                    .filter(models.ProjectTag.project_id == project_id).all()
+                )
+                
                 for tag_name in bulk_update.tag_names:
                     tag = get_or_create_tag(db, tag_name)
-                    project_tag = models.ProjectTag(project_id=project_id, tag_id=tag.id)
-                    db.add(project_tag)
+                    # Only add if not already associated with this project
+                    if tag.id not in existing_tag_ids:
+                        project_tag = models.ProjectTag(project_id=project_id, tag_id=tag.id)
+                        db.add(project_tag)
                 db_project.version += 1
 
             updated_count += 1
