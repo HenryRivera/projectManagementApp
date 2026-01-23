@@ -30,6 +30,15 @@ const ProjectList = () => {
   const [selectedProjects, setSelectedProjects] = useState(new Set())
   const navigate = useNavigate()
 
+  const fetchTags = async () => {
+    try {
+      const data = await getTags()
+      setTags(data)
+    } catch (err) {
+      console.error('Error fetching tags:', err)
+    }
+  }
+
   const fetchProjects = async () => {
     try {
       setLoading(true)
@@ -83,14 +92,6 @@ const ProjectList = () => {
   }, [])
 
   useEffect(() => {
-    const fetchTags = async () => {
-      try {
-        const data = await getTags()
-        setTags(data)
-      } catch (err) {
-        console.error('Error fetching tags:', err)
-      }
-    }
     fetchTags()
   }, [])
 
@@ -128,6 +129,10 @@ const ProjectList = () => {
       alert(`Updated ${result.updated_count} projects. ${result.failed_count} failed.`)
       setSelectedProjects(new Set())
       fetchProjects()
+      // Refresh tags in case new tags were created
+      if (updateData.tag_names) {
+        fetchTags()
+      }
     } catch (err) {
       alert(`Error: ${err.response?.data?.detail || err.message}`)
     }
